@@ -69,7 +69,6 @@ fun TodoListScreen(viewModel: TodoViewModel) {
             }
         }
     }
-
     val inputColor = Color.Blue
 
     Column(

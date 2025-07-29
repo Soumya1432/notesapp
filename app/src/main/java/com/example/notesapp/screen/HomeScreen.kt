@@ -40,72 +40,21 @@ import androidx.navigation.NavController
 fun HomeScreen(navController: NavController){
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(
-            top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
-           bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
-        )
+        modifier = Modifier.fillMaxSize()
+
     ) {
 
         Column {
             Row {
                 OutlinedButton(onClick = {navController.navigate("todo")},
                      modifier = Modifier.fillMaxWidth().padding(24.dp).background(color = Color.Transparent, shape= RoundedCornerShape(20.dp))
-//                         .border(2.dp, Color.Gray, shape = RoundedCornerShape(8.dp))
                 ) {
                     Text("View Todo", color = Color.Cyan, fontWeight = FontWeight.Light, fontSize = 24.sp, modifier = Modifier.padding(18.dp))
-
-//                    IconButton(onClick = {navController.navigate("todo")}) {
-//                        Icon(imageVector = Icons.Default.Delete,  contentDescription = "Delete Icon",)
-//                    }
                 }
             }
         }
 
 
 
-        Spacer(modifier = Modifier.weight(1f)) // Pushes content to bottom
-
-        // Bottom Navigation Row
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Yellow)
-                .padding(vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { /* TODO */ }) {
-                Icon(
-                    imageVector = Icons.Default.Home,
-                    contentDescription = "Home Icon",
-                    tint = Color.Black,
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-            IconButton(onClick = { /* TODO */ }) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Cart Icon",
-                    tint = Color.Black,
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-            IconButton(onClick = { /* TODO */ }) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu Icon",
-                    tint = Color.Black,
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-            IconButton(onClick = { /* TODO */ }) {
-                Icon(
-                    imageVector = Icons.Default.Notifications,
-                    contentDescription = "Notification Icon",
-                    tint = Color.Black,
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-        }
     }
 }
