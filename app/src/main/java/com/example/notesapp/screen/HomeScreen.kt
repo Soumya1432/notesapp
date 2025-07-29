@@ -47,9 +47,9 @@ fun HomeScreen(navController: NavController){
         Column {
             Row {
                 OutlinedButton(onClick = {navController.navigate("todo")},
-                     modifier = Modifier.fillMaxWidth().padding(24.dp).background(color = Color.Transparent, shape= RoundedCornerShape(20.dp))
+                     modifier = Modifier.fillMaxWidth().padding(16.dp).background(color = Color.Transparent, shape= RoundedCornerShape(20.dp))
                 ) {
-                    Text("View Todo", color = Color.Cyan, fontWeight = FontWeight.Light, fontSize = 24.sp, modifier = Modifier.padding(18.dp))
+                    Text("View Todo", color = Color.Blue, fontWeight = FontWeight.Light, fontSize = 18.sp, modifier = Modifier.padding(18.dp))
                 }
             }
         }

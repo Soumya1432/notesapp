@@ -92,6 +92,10 @@
 //    }
 //}
 // layout/Footer.kt
+
+
+
+
 package com.example.notesapp.layout
 
 import androidx.compose.foundation.background
@@ -108,11 +112,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun Footer(navController: NavController) {
+fun Footer(navController: NavController, onMenuClick: ()-> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Yellow)
+            .background(Color.White)
             .padding(
                 bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
             ),
@@ -125,7 +129,7 @@ fun Footer(navController: NavController) {
         IconButton(onClick = { navController.navigate("todo") }) {
             Icon(Icons.Default.ShoppingCart, contentDescription = "Todo", tint = Color.Black)
         }
-        IconButton(onClick = { /* more menu */ }) {
+        IconButton(onClick = { onMenuClick()}) {
             Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.Black)
         }
         IconButton(onClick = { navController.navigate("todo") }) {

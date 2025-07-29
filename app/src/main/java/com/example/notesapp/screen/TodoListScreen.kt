@@ -81,9 +81,10 @@ fun TodoListScreen(viewModel: TodoViewModel) {
                 .fillMaxWidth()
                 .padding(8.dp),
             value = title,
+
             onValueChange = { title = it },
-            label = { Text("Title") },
-            textStyle = TextStyle(color = Color.White, fontWeight = FontWeight.Bold),
+            label = { Text("Title", color = Color.Black) },
+            textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold),
         )
 
         OutlinedTextField(
@@ -93,7 +94,9 @@ fun TodoListScreen(viewModel: TodoViewModel) {
             value = description,
 
             onValueChange = { description = it },
-            label = { Text("Description") }
+            label = { Text("Description",color = Color.Black) },
+            textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold),
+
         )
 
         Button(

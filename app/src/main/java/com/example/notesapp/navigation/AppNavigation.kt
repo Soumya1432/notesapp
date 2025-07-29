@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 import com.example.notesapp.layout.BaseLayout
+import com.example.notesapp.layout.DrawerWrapperLayout
 
 import com.example.notesapp.screen.HomeScreen
 import com.example.notesapp.screen.TodoListScreen
@@ -16,15 +17,15 @@ fun AppNavigation(){
     var navController = rememberNavController()
     NavHost(navController=navController, startDestination = "home") {
 
+
+
         composable("home"){
-            BaseLayout(
-                navController=navController
-            ) {
+            DrawerWrapperLayout( navController=navController) {
                 HomeScreen(navController)
             }
         }
         composable("todo"){
-            BaseLayout(navController=navController) {
+            DrawerWrapperLayout( navController=navController) {
                 TodoScreen(navController)
             }
 

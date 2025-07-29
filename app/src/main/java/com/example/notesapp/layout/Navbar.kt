@@ -2,6 +2,7 @@ package com.example.notesapp.layout
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,11 +14,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,7 +37,6 @@ fun Navbar(){
     Column(
         modifier = Modifier.fillMaxWidth().padding(
             top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
-
         )
     ) {
 
@@ -35,14 +44,28 @@ fun Navbar(){
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Blue)
-            .padding(16.dp),
+            .background(Color.White)
+            .padding(4.dp)
+            .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp))
+//            .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp), clip = false)
+        ,
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "My Notes App",
-            color = Color.White,
-            fontSize = 20.sp
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         )
+        {
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Notifications, contentDescription = "Notification", tint = Color.Black)
+            }
+
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Black)
+            }
+
+
+        }
     }
 }

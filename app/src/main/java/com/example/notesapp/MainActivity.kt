@@ -15,16 +15,21 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.notesapp.navigation.AppNavigation
 import com.example.notesapp.screen.HomeScreen
 import com.example.notesapp.screen.TodoListScreen
@@ -36,11 +41,13 @@ import com.example.notesapp.viewmodel.TodoViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window,false)
         enableEdgeToEdge()
         val viewModel = TodoViewModel()
         setContent {
             NotesappTheme {
-                StatusBarProtection()
+//                StatusBarProtection()
+                SetStatusBarColor(color = Color.Yellow)
                  AppNavigation()
                 }
             }
@@ -49,8 +56,26 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
+fun SetStatusBarColor(color: Color) {
+    val view = LocalView.current
+    SideEffect {
+        val window = (view.context as ComponentActivity).window
+        window.statusBarColor = color.toArgb()
+
+        // Set dark icons for light background
+        val insetsController = WindowInsetsControllerCompat(window, view)
+        insetsController.isAppearanceLightStatusBars = true
+    }
+}
+
+
+
+
+
+
+@Composable
 private fun StatusBarProtection(
-    color: Color = Color.Black
+    color: Color = Color.White
 
 ) {
 
