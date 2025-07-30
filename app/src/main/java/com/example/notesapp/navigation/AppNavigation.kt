@@ -9,27 +9,39 @@ import com.example.notesapp.layout.BaseLayout
 import com.example.notesapp.layout.DrawerWrapperLayout
 
 import com.example.notesapp.screen.HomeScreen
+import com.example.notesapp.screen.OtpScreen
+import com.example.notesapp.screen.RegisterScreen
+import com.example.notesapp.screen.SignupScreen
 import com.example.notesapp.screen.TodoListScreen
 import com.example.notesapp.screen.TodoScreen
 
 @Composable
 fun AppNavigation(){
     var navController = rememberNavController()
-    NavHost(navController=navController, startDestination = "home") {
+    NavHost(navController=navController, startDestination = "signup") {
 
-
-
-        composable("home"){
-            DrawerWrapperLayout( navController=navController) {
-                HomeScreen(navController)
-            }
+        composable("signup"){
+//            SignupScreen(navController)
+            RegisterScreen(navController)
         }
-        composable("todo"){
-            DrawerWrapperLayout( navController=navController) {
-                TodoScreen(navController)
-            }
 
+        composable("otp"){
+//            SignupScreen(navController)
+            OtpScreen(navController)
         }
+
+
+//        composable("home"){
+//            DrawerWrapperLayout( navController=navController) {
+//                HomeScreen(navController)
+//            }
+//        }
+//        composable("todo"){
+//            DrawerWrapperLayout( navController=navController) {
+//                TodoScreen(navController)
+//            }
+//
+//        }
 
     }
 }

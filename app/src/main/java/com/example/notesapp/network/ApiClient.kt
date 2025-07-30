@@ -13,4 +13,13 @@ object ApiClient {
             .build()
             .create(ApiService::class.java)
     }
+     private val retrofit by lazy{
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+    val authService:AuthService by lazy {
+        retrofit.create(AuthService::class.java)
+    }
 }
