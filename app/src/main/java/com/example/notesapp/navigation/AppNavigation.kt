@@ -20,7 +20,7 @@ import com.example.notesapp.screen.VerifyOtp
 @Composable
 fun AppNavigation(){
     var navController = rememberNavController()
-    NavHost(navController=navController, startDestination = "profile") {
+    NavHost(navController=navController, startDestination = "home") {
 
         composable("signup"){
 //            SignupScreen(navController)

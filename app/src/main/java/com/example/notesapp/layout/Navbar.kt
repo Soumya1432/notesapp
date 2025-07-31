@@ -63,7 +63,6 @@ fun Navbar(navController: NavController){
             top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
         )
     ) {
-
     }
     Box(
         modifier = Modifier
@@ -158,5 +157,6 @@ fun handleSearchQuery(query: String,navController: NavController){
     "home" -> navController.navigate("home")
      "todo" -> navController.navigate("todo")
      "profile" -> navController.navigate("profile")
+     "signup" -> navController.navigate("signup")
  }
 }

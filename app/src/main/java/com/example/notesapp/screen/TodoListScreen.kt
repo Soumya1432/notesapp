@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun TodoListScreen(viewModel: TodoViewModel) {
     val todos by viewModel.todos.collectAsState()
-
+    val context = LocalContext.current
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
@@ -92,11 +93,9 @@ fun TodoListScreen(viewModel: TodoViewModel) {
                 .fillMaxWidth()
                 .padding(8.dp),
             value = description,
-
             onValueChange = { description = it },
             label = { Text("Description",color = Color.Black) },
             textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold),
-
         )
 
         Button(
@@ -116,6 +115,11 @@ fun TodoListScreen(viewModel: TodoViewModel) {
                         editingTodoId = null
                     } else {
                         viewModel.addTodo(title, description)
+                        NotificationUtils.showNotification(
+                            context = context,
+                            title = "New TODO Added",
+                            description = title
+                        )
                     }
 
                     title = ""
