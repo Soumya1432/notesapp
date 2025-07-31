@@ -127,12 +127,12 @@ fun Footer(navController: NavController, onMenuClick: ()-> Unit) {
             Icon(Icons.Default.Home, contentDescription = "Home", tint = Color.Black)
         }
         IconButton(onClick = { navController.navigate("todo") }) {
-            Icon(Icons.Default.ShoppingCart, contentDescription = "Todo", tint = Color.Black)
+            Icon(Icons.Default.AddCircle, contentDescription = "Todo", tint = Color.Black)
         }
         IconButton(onClick = { onMenuClick()}) {
             Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.Black)
         }
-        IconButton(onClick = { navController.navigate("todo") }) {
+        IconButton(onClick = { navController.navigate("profile") }) {
             Icon(Icons.Default.AccountCircle, contentDescription = "Profile", tint = Color.Black)
         }
     }

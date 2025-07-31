@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +29,10 @@ fun DrawerContent(
     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Text("Navigation", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(bottom = 16.dp))
         DrawerItem("Home",Icons.Default.Home,"home",onDestinationClick)
-        DrawerItem("Todo",Icons.Default.ShoppingCart,"todo",onDestinationClick)
+        DrawerItem("Add Todo",Icons.Default.AddCircle,"todo",onDestinationClick)
+        DrawerItem("My Profile",Icons.Default.Person,"profile",onDestinationClick)
+        DrawerItem("Logout",Icons.Default.ExitToApp,"profile",onDestinationClick)
+
     }
 
 }

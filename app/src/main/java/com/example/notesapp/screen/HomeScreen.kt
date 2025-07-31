@@ -41,7 +41,6 @@ fun HomeScreen(navController: NavController){
 
     Column(
         modifier = Modifier.fillMaxSize()
-
     ) {
 
         Column {

@@ -2,6 +2,7 @@ package com.example.notesapp.screen
 
 
 import android.graphics.Paint.Align
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +55,6 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
 
     val context = LocalContext.current
     // val message by viewModel.authMessage.collectAsState()
-
 
     Column(
         modifier = Modifier
@@ -104,16 +105,31 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.TopCenter)
-                        .padding(24.dp)
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Title, subtitle, textfield
+
+                    // Resend Text
+                    Text(
+                        text = "have and Account?",
+                        modifier = Modifier.padding(top = 8.dp),
+                        color = Color.Gray
+                    )
+
+                    Text(
+                        text = "Signin now",
+                        modifier = Modifier.padding(top = 4.dp),
+                        color = Color(0xFFFFC107), // Yellow-like
+                        fontWeight = FontWeight.SemiBold
+                    )
+
                 }
 
 
                 Button(
                     onClick = {
                         viewModel.registerUser(email.value)
-                        navController.navigate("otp")
+                        navController.navigate("otp/${email.value}")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -129,15 +145,23 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
                     Text("Signup Now")
                 }
 
-                // Show response message
-                Text(
-                    text = message.value,
-                    color = if (message.value.contains("Error", true)) Color.Red else Color.Green,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp),
-                    textAlign = TextAlign.Center
-                )
+                LaunchedEffect(message.value) {
+
+                        message.value.let{
+                            if(it.isNotBlank()){
+                                Toast.makeText(context,it,Toast.LENGTH_SHORT).show()
+
+                                if(it.contains("OTP", ignoreCase = true) ||  it.contains("success", ignoreCase = true)){
+                                    navController.navigate("otp/${email.value}")
+                                }
+                            }
+
+                        }
+
+//                    if (message.value.contains("success", ignoreCase = true)) {
+//                        Toast.makeText(context, "OTP verified successfully!", Toast.LENGTH_SHORT).show()
+//                    }
+                }
             }
 
         }
