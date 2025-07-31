@@ -7,20 +7,21 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
@@ -28,8 +29,11 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,14 +46,18 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
+import androidx.navigation.NavController
+import retrofit2.http.Query
 
 @Composable
-fun Navbar(){
+fun Navbar(navController: NavController){
 
     var isSearchVisible by remember { mutableStateOf(false) }
-
-   var showNotificationDialog by remember { mutableStateOf(false) }
-
+    var searchQuery by remember { mutableStateOf("") }
+    var showNotificationDialog by remember { mutableStateOf(false) }
+    val keyboardController= LocalSoftwareKeyboardController.current
     Column(
         modifier = Modifier.fillMaxWidth().padding(
             top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
@@ -62,8 +70,6 @@ fun Navbar(){
             .fillMaxWidth()
             .background(Color.White)
             .padding(4.dp)
-            .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp))
-//            .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp), clip = false)
         ,
         contentAlignment = Alignment.Center
     ) {
@@ -88,12 +94,28 @@ fun Navbar(){
         enter = fadeIn() + slideInHorizontally(),
         exit = fadeOut() + slideOutHorizontally()
         ) {
-        TextField(
-            value = "",
-            onValueChange = {},
-            placeholder = { Text("Search...") },
-            modifier = Modifier.fillMaxWidth().padding(8.dp)
-        )
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = {
+                searchQuery = it
+
+            },
+            placeholder = { Text("Search....") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(18.dp),
+            shape = RoundedCornerShape(8.dp),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+            singleLine = true,
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    handleSearchQuery(searchQuery, navController)
+                    keyboardController?.hide()
+                }
+            ),
+            )
+
+
     }
 
     if(showNotificationDialog){
@@ -104,15 +126,37 @@ fun Navbar(){
 }
 
 @Composable
-fun NotificationBox(){
+fun NotificationBox() {
     Box(
-        modifier = Modifier.fillMaxWidth().padding(16.dp)
-            .background(Color(0xFFF9F9F9),
-                shape = RoundedCornerShape(16.dp)
-                )
-            .border(1.dp, Color.LightGray, shape = RoundedCornerShape(16.dp))
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(16.dp)
-    ){
-        Text(text = "No new Notifications", color = Color.Black)
+            .height(360.dp) // Fixed height for the notification box
+            .background(Color(0xFFF9F9F9), shape = RoundedCornerShape(16.dp))
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+        ) {
+            // Replace with dynamic notifications list if needed
+            repeat(30) {
+                Text(
+                    text = "🔔 Notification ${it + 1}",
+                    color = Color.Black,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(vertical = 4.dp)
+                )
+            }
+        }
     }
+}
+
+fun handleSearchQuery(query: String,navController: NavController){
+ when(query.trim().lowercase()){
+    "home" -> navController.navigate("home")
+     "todo" -> navController.navigate("todo")
+     "profile" -> navController.navigate("profile")
+ }
 }

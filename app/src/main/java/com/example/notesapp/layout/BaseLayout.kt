@@ -18,7 +18,7 @@ fun BaseLayout(
             .fillMaxSize()
     ) {
         // Fixed Top Navbar
-        Navbar()
+        Navbar(navController)
 
         // Main Content in Middle
         Box(
