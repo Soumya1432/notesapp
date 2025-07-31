@@ -36,6 +36,7 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -99,6 +100,7 @@ fun OtpScreen(navController: NavController,viewModel: AuthViewModel,email: Strin
                                 }
                             }
                         },
+                        textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Medium),
                         modifier = Modifier.width(48.dp).height(56.dp).focusRequester(focusRequesters[index])
                             .onKeyEvent {
                                 if(it.key == Key.Backspace && value.value.isEmpty()){

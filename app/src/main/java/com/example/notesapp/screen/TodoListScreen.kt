@@ -97,7 +97,6 @@ fun TodoListScreen(viewModel: TodoViewModel) {
             label = { Text("Description",color = Color.Black) },
             textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold),
         )
-
         Button(
             onClick = {
                 if (title.isNotBlank() && description.isNotBlank()) {
@@ -121,7 +120,6 @@ fun TodoListScreen(viewModel: TodoViewModel) {
                             description = title
                         )
                     }
-
                     title = ""
                     description = ""
                 }

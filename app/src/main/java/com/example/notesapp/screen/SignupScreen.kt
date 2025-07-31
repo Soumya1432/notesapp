@@ -5,6 +5,7 @@ import android.graphics.Paint.Align
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -96,6 +98,7 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
                     .fillMaxWidth()
                     .padding(top = 32.dp),
                 shape = RoundedCornerShape(8.dp),
+                textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Medium),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Email
                 )
@@ -118,7 +121,10 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
 
                     Text(
                         text = "Signin now",
-                        modifier = Modifier.padding(top = 4.dp),
+                        modifier = Modifier.padding(top = 4.dp)
+                            .clickable {
+                                navController.navigate("signin")
+                            },
                         color = Color(0xFFFFC107), // Yellow-like
                         fontWeight = FontWeight.SemiBold
                     )
@@ -129,7 +135,7 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
                 Button(
                     onClick = {
                         viewModel.registerUser(email.value)
-                        navController.navigate("otp/${email.value}")
+                       // navController.navigate("otp/${email.value}")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -146,22 +152,35 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
                 }
 
                 LaunchedEffect(message.value) {
+                    message.value.let { msg ->
+                        if (msg.isNotBlank()) {
+                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 
-                        message.value.let{
-                            if(it.isNotBlank()){
-                                Toast.makeText(context,it,Toast.LENGTH_SHORT).show()
-
-                                if(it.contains("OTP", ignoreCase = true) ||  it.contains("success", ignoreCase = true)){
-                                    navController.navigate("otp/${email.value}")
-                                }
+                            if (msg.contains("otp", ignoreCase = true) || msg.contains(
+                                    "success",
+                                    ignoreCase = true
+                                )
+                            ) {
+                                navController.navigate("otp/${email.value}")
                             }
-
                         }
-
-//                    if (message.value.contains("success", ignoreCase = true)) {
-//                        Toast.makeText(context, "OTP verified successfully!", Toast.LENGTH_SHORT).show()
-//                    }
+                    }
                 }
+
+
+//                LaunchedEffect(message.value) {
+//
+//                        message.value.let{
+//                            if(it.isNotBlank()){
+//                                Toast.makeText(context,it,Toast.LENGTH_SHORT).show()
+//
+//                                if(it.contains("OTP", ignoreCase = true) ||  it.contains("success", ignoreCase = true)){
+//                                    navController.navigate("otp/${email.value}")
+//                                }
+//                            }
+//
+//                        }
+//                }
             }
 
         }

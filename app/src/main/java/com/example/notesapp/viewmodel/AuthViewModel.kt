@@ -15,20 +15,36 @@ class AuthViewModel( private val service:AuthService):ViewModel() {
     private val _authMessage = MutableStateFlow("")
     val authMessage:StateFlow<String> = _authMessage
 
-    fun registerUser(email:String){
+//    fun registerUser(email:String){
+//        viewModelScope.launch {
+//            val response = service.register(AuthRequest(email))
+//            Log.d("Email","Ateepmt $email")
+//            if(response.isSuccessful){
+//                _authMessage.value = response.body()?.message ?: "Registration successful"
+//                Log.d("Response","response struct $response")
+//            }
+//            else{
+//                _authMessage.value= "Error: ${response.code()} ${response.message()}"
+//                Log.d("Response","response struct $response")
+//            }
+//        }
+//    }
+
+    fun registerUser(email: String) {
         viewModelScope.launch {
-            val response = service.register(AuthRequest(email))
-            Log.d("Email","Ateepmt $email")
-            if(response.isSuccessful){
-                _authMessage.value = response.body()?.message ?: "Registration successful"
-                Log.d("Response","response struct $response")
-            }
-            else{
-                _authMessage.value= "Error: ${response.code()} ${response.message()}"
-                Log.d("Response","response struct $response")
+            try {
+                val response = service.register(AuthRequest(email))
+                if (response.isSuccessful) {
+                    _authMessage.value = response.body()?.message ?: "Registration successful"
+                } else {
+                    _authMessage.value = response.errorBody()?.string() ?: "Signup failed"
+                }
+            } catch (e: Exception) {
+                _authMessage.value = "Error: ${e.message}"
             }
         }
     }
+
 
     fun loginUser(email: String){
         viewModelScope.launch {

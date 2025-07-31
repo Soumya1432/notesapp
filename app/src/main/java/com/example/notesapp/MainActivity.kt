@@ -47,7 +47,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             NotesappTheme {
 //                StatusBarProtection()
-                SetStatusBarColor(color = Color.Yellow)
+                SetStatusBarColor(color = Color.White
+                )
                  AppNavigation()
                 }
             }
