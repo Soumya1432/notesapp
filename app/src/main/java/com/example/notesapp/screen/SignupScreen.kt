@@ -43,6 +43,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavController
@@ -86,9 +87,7 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
                     .padding(top = 12.dp)
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center
-
             )
-
             // Phone number input
             OutlinedTextField(
                 value = email.value,
@@ -114,7 +113,7 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
 
                     // Resend Text
                     Text(
-                        text = "have and Account?",
+                        text = "have an Account?",
                         modifier = Modifier.padding(top = 8.dp),
                         color = Color.Gray
                     )
@@ -123,8 +122,9 @@ fun SignupScreen(navController: NavController,viewModel: AuthViewModel) {
                         text = "Signin now",
                         modifier = Modifier.padding(top = 4.dp)
                             .clickable {
-                                navController.navigate("signin")
+                                navController.navigate("Login now")
                             },
+                        textDecoration = TextDecoration.Underline,
                         color = Color(0xFFFFC107), // Yellow-like
                         fontWeight = FontWeight.SemiBold
                     )

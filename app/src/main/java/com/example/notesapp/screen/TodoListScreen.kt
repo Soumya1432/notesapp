@@ -34,8 +34,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.R
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,6 +45,15 @@ import androidx.navigation.NavController
 import com.example.notesapp.network.Todo
 import com.example.notesapp.viewmodel.TodoViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun TodoListScreen(viewModel: TodoViewModel) {
@@ -149,8 +160,11 @@ fun TodoListScreen(viewModel: TodoViewModel) {
                         Column(
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text(text = todo.title, color = Color.Black)
-                            Text(text = todo.description, color = Color.DarkGray)
+
+                            Text(text = todo.title, color = Color.Black, fontWeight = FontWeight.Bold)
+                            Text(text = todo.description, color = Color.DarkGray, fontWeight = FontWeight.Normal)
+
+                            Text(text = formatCreatedTime(createdAtString = todo.createdAt), color = Color.Gray)
                         }
 
                         Row {
@@ -187,5 +201,69 @@ fun TodoListScreen(viewModel: TodoViewModel) {
                 }
             }
         }
+    }
+}
+
+//fun formatCreatedTime(createdAt: Long): String {
+//    val now = System.currentTimeMillis()
+//    val diff = now - createdAt
+//
+//    // Format for display
+//    val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+//    val createdDate = Date(createdAt)
+//    val formattedDate = dateFormat.format(createdDate)
+//
+//    // Time ago logic
+//    val seconds = TimeUnit.MILLISECONDS.toSeconds(diff)
+//    val minutes = TimeUnit.MILLISECONDS.toMinutes(diff)
+//    val hours = TimeUnit.MILLISECONDS.toHours(diff)
+//    val days = TimeUnit.MILLISECONDS.toDays(diff)
+//
+//    val timeAgo = when {
+//        seconds < 60 -> "$seconds seconds ago"
+//        minutes < 60 -> "$minutes minutes ago"
+//        hours < 24 -> "$hours hours ago"
+//        else -> "$days days ago"
+//    }
+//
+//    return "$formattedDate · $timeAgo"
+//}
+
+
+fun formatCreatedTime(createdAtString: String): String {
+    return try {
+        // Handle ISO 8601 with or without milliseconds
+        val cleanedDate = createdAtString.replace("Z", "").replace("T", " ")
+        val inputFormat = when {
+            cleanedDate.contains('.') -> SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+            else -> SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        }
+
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val date = inputFormat.parse(cleanedDate)
+        val createdAt = date?.time ?: return "Invalid time"
+
+        val now = System.currentTimeMillis()
+        val diff = now - createdAt
+
+        val outputFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+        outputFormat.timeZone = TimeZone.getDefault()
+        val formattedDate = outputFormat.format(Date(createdAt))
+
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(diff)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(diff)
+        val hours = TimeUnit.MILLISECONDS.toHours(diff)
+        val days = TimeUnit.MILLISECONDS.toDays(diff)
+
+        val timeAgo = when {
+            seconds < 60 -> "$seconds seconds ago"
+            minutes < 60 -> "$minutes minutes ago"
+            hours < 24 -> "$hours hours ago"
+            else -> "$days days ago"
+        }
+
+        "$formattedDate · $timeAgo"
+    } catch (e: Exception) {
+        "Invalid date"
     }
 }

@@ -117,7 +117,7 @@ fun SplashScreen(navController: NavController) {
                 // Get Started Button
                 Button(
                     onClick = {
-                        navController.navigate("signup") // or whatever your next screen is
+                        navController.navigate("signin") // or whatever your next screen is
                     },
                     modifier = Modifier
                         .fillMaxWidth()
