@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  
-</PreferenceScreen>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- For files like getExternalFilesDir() -->
+    <external-files-path
+        name="my_app_images"
+        path="Pictures/" />
+
+    <!-- For public folder like Environment.getExternalStoragePublicDirectory -->
+    <external-cache-path
+        name="my_images"
+        path="/" />
+
+
+    <!-- For public folder like Environment.getExternalStoragePublicDirectory -->
+    <external-path
+        name="camera_images"
+        path="DCIM/Camera/" />
+
+</paths>

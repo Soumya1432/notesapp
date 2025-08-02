@@ -1,5 +1,7 @@
 package com.example.notesapp.layout
 
+import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -10,11 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.notesapp.CameraActivity
 
 @Composable
 fun Footer(navController: NavController, onMenuClick: ()-> Unit) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,5 +40,13 @@ fun Footer(navController: NavController, onMenuClick: ()-> Unit) {
         IconButton(onClick = { navController.navigate("profile") }) {
             Icon(Icons.Default.AccountCircle, contentDescription = "Profile", tint = Color.Black)
         }
+        IconButton(onClick = {
+            val intent = Intent(context, CameraActivity::class.java)
+            context.startActivity(intent)
+        }) {
+            Log.d("Calling camerwa","watch")
+            Icon(Icons.Default.LocationOn, contentDescription = "Camera", tint = Color.Black)
+        }
+
     }
 }
