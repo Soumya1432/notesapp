@@ -10,6 +10,8 @@ data class  OtpVerifyRequest(
 )
 
 // for signup login response
+
+
 data class AuthResponse(
     val message: String,
     val data: UserData? = null
